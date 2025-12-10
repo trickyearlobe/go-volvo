@@ -24,7 +24,19 @@ cd go-volvo
 go build .
 ```
 
-## Configuration
+## Configuration of VOLVO application API
+
+1. Sign up for a [Volvo Developer Account](https://developer.volvocars.com) using your normal Volvo credentials
+2. Navigate to the [Volvo API Applications page](https://developer.volvocars.com/account/#your-api-applications) and create a new API application
+3. Make a note of the VCC API Keys as we will need to add one of them to the `go-volvo` CLI to make API calls
+4. If you don't want to publish your app to use OAuth, you can obtain 30min test tokens from the [Test Access Tokens](https://developer.volvocars.com/apis/docs/test-access-tokens) page.
+5. If you wish to go ahead with OAuth you will need to publish your app. Please ensure that:-
+   1.  Your callback URI points to a valid HTTPS URL (HTTP will not be accepted). The `go-volvo` default is `https://localhost:8089/callback` but if you can issue valid TLS certs then you may wish to use a proper DNS entry
+   2.  You selected all the scopes in the `Connected Vehicle` API as `go-volvo` will request access to all of them.
+   3.  The terms an conditions URL points to some reachable web page (ideally with some actual T&C's on it for legal reasons).
+6. Once your app is published, make a note of the ClientID and ClientSecret as we will need to add them to the `go-volvo` CLI  
+
+## Configuration of go-volvo CLI
 
 ### Option 1: OAuth Login (Recommended)
 

@@ -25,8 +25,11 @@ import (
 )
 
 var (
-	vccApiKey string
-	token     string
+	vccApiKey        string
+	credToken        string
+	credClientId     string
+	credClientSecret string
+	callbackUrl      string
 )
 
 var credentialsCmd = &cobra.Command{
@@ -37,8 +40,17 @@ var credentialsCmd = &cobra.Command{
 		if vccApiKey != "" {
 			viper.Set("vccApiKey", vccApiKey)
 		}
-		if token != "" {
-			viper.Set("token", token)
+		if credToken != "" {
+			viper.Set("token", credToken)
+		}
+		if credClientId != "" {
+			viper.Set("clientId", credClientId)
+		}
+		if credClientSecret != "" {
+			viper.Set("clientSecret", credClientSecret)
+		}
+		if callbackUrl != "" {
+			viper.Set("callbackUrl", callbackUrl)
 		}
 
 		configFile := viper.ConfigFileUsed()
@@ -68,5 +80,8 @@ var credentialsCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(credentialsCmd)
 	credentialsCmd.Flags().StringVarP(&vccApiKey, "vcc-api-key", "k", "", "VCC API key from developer portal")
-	credentialsCmd.Flags().StringVarP(&token, "token", "t", "", "Volvo API 'test'token from developer portal")
+	credentialsCmd.Flags().StringVarP(&credToken, "token", "t", "", "Volvo API 'test' token from developer portal")
+	credentialsCmd.Flags().StringVar(&credClientId, "client-id", "", "OAuth client ID from developer portal")
+	credentialsCmd.Flags().StringVar(&credClientSecret, "client-secret", "", "OAuth client secret from developer portal")
+	credentialsCmd.Flags().StringVar(&callbackUrl, "callback-url", "", "OAuth callback URL (default: https://localhost:8089/callback)")
 }

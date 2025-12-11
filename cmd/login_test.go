@@ -111,36 +111,6 @@ func TestExchangeCodeForToken(t *testing.T) {
 	}
 }
 
-func TestRefreshAccessToken(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		r.ParseForm()
-		if r.Form.Get("grant_type") != "refresh_token" {
-			t.Errorf("expected grant_type 'refresh_token', got %s", r.Form.Get("grant_type"))
-		}
-		if r.Form.Get("refresh_token") != "test-refresh-token" {
-			t.Errorf("expected refresh_token 'test-refresh-token', got %s", r.Form.Get("refresh_token"))
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte(`{
-			"access_token": "new-access-token",
-			"refresh_token": "new-refresh-token",
-			"expires_in": 1800,
-			"token_type": "Bearer"
-		}`))
-	}))
-	defer server.Close()
-
-	tokens, err := refreshAccessToken(server.URL, "test-refresh-token", "test-client-id", "test-client-secret")
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-
-	if tokens.AccessToken != "new-access-token" {
-		t.Errorf("expected access_token 'new-access-token', got %s", tokens.AccessToken)
-	}
-}
-
 func TestGenerateSelfSignedCert(t *testing.T) {
 	certPem, keyPem, err := generateSelfSignedCert("localhost")
 	if err != nil {

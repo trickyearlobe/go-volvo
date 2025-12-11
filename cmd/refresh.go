@@ -57,6 +57,7 @@ var refreshCmd = &cobra.Command{
 		}
 
 		fmt.Println("Token refreshed successfully!")
+		fmt.Printf("New access token expires in: %d seconds which is at %s\n", tokens.ExpiresIn, time.Now().Add(time.Duration(tokens.ExpiresIn)*time.Second).Format(time.RFC3339))
 		return nil
 	},
 }
@@ -95,4 +96,3 @@ func refreshAccessToken(tokenUrl string, refreshToken string, clientId string, c
 func init() {
 	rootCmd.AddCommand(refreshCmd)
 }
-

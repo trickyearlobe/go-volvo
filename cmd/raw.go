@@ -88,9 +88,7 @@ func makeVolvoRequest(url string, method string, data string) ([]byte, int, erro
 	req.Header.Set("VCC-Api-Key", apiKey)
 	req.Header.Set("Authorization", "Bearer "+token)
 	req.Header.Set("Accept", "application/json")
-	if data != "" {
-		req.Header.Set("Content-Type", "application/json")
-	}
+	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
